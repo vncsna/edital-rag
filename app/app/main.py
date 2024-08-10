@@ -126,10 +126,10 @@ def generate_chain():
         .assign(answer=document_chain)
     )  # fmt: skip
 
-    return conversational_retrieval_chain, retriever
+    return conversational_retrieval_chain, retriever, vectorstore
 
 
-chain, retriever = generate_chain()
+chain, retriever, vectorstore = generate_chain()
 
 
 ########################################
