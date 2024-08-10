@@ -1,14 +1,17 @@
-from json import dump
+from json import dump, load
+
+from langchain.evaluation import load_evaluator
 
 from app.main import WORKING_DIRECTORY, chain, retriever, vectorstore
 
-CONTEXT_FILEPATH = WORKING_DIRECTORY / "data/evaluation.json"
+REASONING_FILEPATH = WORKING_DIRECTORY / "data/reasoning.json"
+EVALUATION_FILEPATH = WORKING_DIRECTORY / "data/evaluation.json"
 
 
 def generate_data():
     """Generate evaluation data for validation"""
 
-    if CONTEXT_FILEPATH.exists():
+    if EVALUATION_FILEPATH.exists():
         return
 
     answers = []
@@ -42,9 +45,34 @@ def generate_data():
                 ],
             }
         )
-    with CONTEXT_FILEPATH.open("w") as file:
+
+    with EVALUATION_FILEPATH.open("w") as file:
         dump(answers, file)
 
 
-generate_data()
+def validate_data():
+    """Validate answers without references"""
 
+    if REASONING_FILEPATH.exists():
+        return
+
+    with EVALUATION_FILEPATH.open("r") as file:
+        data = load(file)
+
+    evaluator = load_evaluator("score_string")
+
+    evaluations = []
+    for datum in data:
+        evaluations.append(
+            evaluator.evaluate_strings(
+                input=datum["question"],
+                prediction=datum["answer"],
+            )
+        )
+
+    with REASONING_FILEPATH.open("w") as file:
+        dump(evaluations, file)
+
+
+generate_data()
+validate_data()
