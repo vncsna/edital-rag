@@ -9,4 +9,4 @@ install:
 	@poetry --directory ./app install
 
 run:
-	@poetry --directory ./app run python app/app/main.py
+	@poetry --directory ./app run streamlit run app/app/main.py

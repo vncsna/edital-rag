@@ -1,3 +1,4 @@
 .env
 .ruff_cache
 .debug.ipynb
+__pycache__
