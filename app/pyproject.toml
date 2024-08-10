@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "app"
+version = "0.1.0"
+description = ""
+authors = ["Vinicius Aguiar <vncsna@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "3.10.*"
+langchain = "^0.2.12"
+langchain-openai = "^0.1.20"
+langchain-community = "^0.2.11"
+faiss-gpu = "^1.7.2"
+sentence-transformers = "^3.0.1"
+pypdf = "^4.3.1"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.5.7"
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
