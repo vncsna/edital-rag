@@ -8,7 +8,9 @@ authors = ["Vinicius Aguiar <vncsna@gmail.com>"]
 python = "3.10.*"
 langchain = "^0.2.12"
 langchain-openai = "^0.1.20"
+langchain-chroma = "^0.1.2"
 langchain-community = "^0.2.11"
+sentence-transformers = "^3.0.1"
 pypdf = "^4.3.1"
 streamlit = "^1.37.1"
 
