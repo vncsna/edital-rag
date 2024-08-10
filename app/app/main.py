@@ -2,7 +2,29 @@ from pathlib import Path
 
 import streamlit as st
 
-from app.utils import get_pdf_as_txt
+from pypdf import PdfReader
+
+########################################
+# Helper
+
+def get_pdf_as_txt(filepath: Path) -> str:
+    filepath_txt = filepath.with_suffix(".txt")
+
+    if filepath_txt.exists():
+        return filepath_txt.read_text()
+
+    reader = PdfReader(filepath)
+
+    text = ""
+    for page in reader.pages:
+        text += page.extract_text()
+
+    filepath_txt.write_text(text)
+
+    return text
+
+########################################
+# App
 
 st.title("Vestibular Unicamp 2025")
 

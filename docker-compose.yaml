@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./app/app:/src/app/app
+      - ./data:/src/data
+    env_file:
+      - .env
+    environment:
+      - STREAMLIT_SERVER_PORT=8501
