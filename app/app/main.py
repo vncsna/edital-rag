@@ -1,11 +1,11 @@
 from pathlib import Path
 
 import streamlit as st
-
 from pypdf import PdfReader
 
 ########################################
 # Helper
+
 
 def get_pdf_as_txt(filepath: Path) -> str:
     filepath_txt = filepath.with_suffix(".txt")
@@ -23,21 +23,30 @@ def get_pdf_as_txt(filepath: Path) -> str:
 
     return text
 
+
 ########################################
 # App
 
-st.title("Vestibular Unicamp 2025")
+st.title("Vestibular Unicamp")
 
-tab1, tab2 = st.tabs(["Dúvidas", "Referências"])
+tab1, tab2 = st.tabs(["Chat", "Referências"])
 
 with tab1:
-    user_input = st.text_input("Qual a sua dúvida sobre o edital?")
+    with st.container(border=True, height=600):
+        # Initialize chat history
+        if "messages" not in st.session_state:
+            st.session_state.messages = []
 
-    if st.button("Perguntar"):
-        if user_input:
-            st.write(user_input)
-        else:
-            st.write("Por favor adicione uma dúvida")
+        # Display chat messages from history on app rerun
+        for message in st.session_state.messages:
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
+
+        # Load user input, process and return assistant output
+        if prompt := st.chat_input("Digite uma dúvida"):
+            st.session_state.messages.append({"role": "user", "content": prompt})
+            st.session_state.messages.append({"role": "assistant", "content": f"R: {prompt}"})
+            st.rerun()
 
 
 with tab2:
@@ -46,4 +55,4 @@ with tab2:
 
     value = get_pdf_as_txt(filepath)
 
-    st.text_area(label="Edital 2025", value=value, height=600)
+    st.text_area(label="Edital 2025", label_visibility="collapsed", value=value, height=600)
