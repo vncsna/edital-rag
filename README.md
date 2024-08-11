@@ -6,7 +6,8 @@
 
 1. Copie o arquivo `.env.example` para `.env`
 2. Substitua a variável de ambiente `OPENAI_API_KEY`
-3. Suba o aplicativo via docker compose com `docker-compose up`
+3. Suba o aplicativo via docker compose com `docker-compose up`  
+  Caso necessário configure seu ambiente o uso da [NVIDIA CUDA](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)
 
 ![image](https://github.com/user-attachments/assets/4be8e103-d608-4cb7-9144-198b2831dbb1)
 
